@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Learnz</title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <script src="./questionGenorators.js"></script>
+        <script src="./technique.js"></script>
+        <script src="./script.js"></script>
+        <script src="https://cdn.plot.ly/plotly-1.2.0.min.js"></script>
+        <style>
+        [class*="col-"] {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            background-color: rgba(86,61,124,.15);
+            border: 1px solid rgba(86,61,124,.2);
+        }
+        .correct {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            background-color: rgba(0,255,0, 1);
+            border: 1px solid rgba(86,61,124,.2);
+        }
+        .incorrect {
+            padding-top: 1rem;
+            padding-bottom: 1rem;
+            background-color: rgba(255,0,0, 1);
+            border: 1px solid rgba(86,61,124,.2);
+        }
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Learning Addition</h2>
+            <label>Base to count in
+                <input type="number" id="base" value="16" min="2" max="36" step="1">
+            </label>
+            <button id="do-test">Do Test</button>
+            <p id="time"></p>
+            <div class="row">
+                <div class="col-md-4">
+                    <h3>Statistics</h3>
+                    <div id="tester"></div>
+                </div>
+                <div class="col-md-4">
+                    <p id="question"></p>
+                    <input id="answer" type="text">
+                    <button id="check">Check Answer</button>
+                    <p id="result"></p>
+                    <ul id="previous-answers">
+                    </ul>
+                </div>
+                <div id="help" class="col-md-4">
+                    <div name="count-on">
+                        <h2>Count on</h2>
+                        <canvas id="canvas"></canvas>
+                        <p>This is the most basic method of counting. It involves picking the largest number and literaly counting from there</p>
+                        <p>E.g. 5 + 3 = ?
+                            Well 5 + 1 = 6
+                            5 + 2 = 7
+                            5 + 3 = 8!
+                        </p>
+                        <p>Or b + 4 = ?
+                            Well b + 1 = c
+                            b + 2 = d
+                            b + 3 = e
+                            b + 4 = f!
+                        </p>
+                        <p>Counting on your fingers is the easiest way to use this method.
+                            For systems more then base 10, you do get edge cases whereyou run out of finger (5+b!)
+                            But there's not many of them, and a numberline can help a lot.
+                        </p>
+                    </div>
+                    <div name="doubles" hidden>
+                        <h2>Doubles</h2>
+                    </div>
+                    <div name="doubles-plus-1" hidden>
+                        <h2>Doubles plus 1</h2>
+                    </div>
+                    <div name="making-10" hidden>
+                        <h2>Making 10</h2>
+                    </div>
+                    <div name="making-multiples-of-10" hidden>
+                        <h2>Making multiples of 10</h2>
+                    </div>
+                    <div name="front-end-addition" hidden>
+                        <h2>Front end addition</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>

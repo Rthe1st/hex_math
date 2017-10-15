@@ -1,0 +1,8 @@
+{
+  "name": "hex_math",
+  "version": "1.0.0",
+  "description": "Tool to learn basic maths in hexadecimal",
+  "main": "index.js",
+  "author": "Mehow <Kaiser.mehow@gmail.com>",
+  "license": "MIT"
+}
