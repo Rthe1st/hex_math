@@ -1,7 +1,7 @@
 class Technique{
-    constructor(name, questionGenorator, cssName){
+    constructor(name, questionGenerator, cssName){
         this.name = name;
-        this.questionGenorator = questionGenorator;
+        this.questionGenerator = questionGenerator;
         this.cssName = cssName;
         this.correct = 0;
         this.incorrect = 0;
@@ -10,7 +10,7 @@ class Technique{
     }
 
     newQuestion(){
-        let [question, answer, left] = this.questionGenorator();
+        let [question, answer, left] = this.questionGenerator();
         return {question: question, answer: answer, left: left, technique: this};
     }
 
