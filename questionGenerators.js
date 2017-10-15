@@ -1,3 +1,21 @@
+function makeEquationString(left, right, answer){
+    //let nullParams = 1;//[left, right, answer].filter(function(element){
+    //   return element == null;
+    //});
+    //let nullParams = [left, right, answer].filter(element => element == null);
+   //if(nullParams.length > 1){
+    //    console.log("Equation is under-specified");
+    //}
+    [left, right, answer] = [left, right, answer].map(function(value){
+        if(value == null){
+            return "?";
+        }else{
+            return value.toString(base());
+        }
+    });
+    return left + " + " + right + " = " + answer;
+}
+
 function countingOnUpTo10(){
     /*Single digit sums that add up to a single digit
     For bases with leters (i.e. base > 10), a bias is given towards sums adding to letterrs (more then 10)
