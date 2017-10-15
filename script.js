@@ -29,21 +29,22 @@ function checkProgress(){
 function checkAnswer(event){
     let guess = parseInt(document.getElementById("answer").value, base());
     let wasRight = guess === questionDetail.answer
-    let result = document.getElementById("result");
     recordQuestion(wasRight);
-    questionDetail.technique.addResult(wasRight);
-    checkProgress();
+    let result = document.getElementById("result");
     if(wasRight){
         result.textContent = "correct!";
         statistics.totalCorrect += 1;
         statistics.test.correct += 1;
+        checkProgress();
         newQuestion(questionDetail);
     }else{
-        numberLine(questionDetail.left, guess, true);
-        statistics.totalIncorrect += 1;
         result.textContent = "wrong!";
+        statistics.totalIncorrect += 1;
         statistics.test.incorrect += 1;
-        alert(document.getElementById("question").textContent.replace("?", questionDetail.answer.toString(base())));
+        numberLine(questionDetail.left, guess, true);
+        let questionText = document.getElementById("question").textContent;
+        let answerText = questionDetail.answer.toString(base());
+        alert(questionText.replace("?", answerText));
     }
     refreshGraph(plotData);
     document.getElementById("answer").value = "";
@@ -51,6 +52,7 @@ function checkAnswer(event){
 }
 
 function recordQuestion(wasCorrect){
+    questionDetail.technique.addResult(wasCorrect);
     let previousAnswers = document.getElementById("previous-answers");
     let entry = document.createElement('li');
     if(wasCorrect){
