@@ -18,18 +18,19 @@ function makeEquationString(left, right, answer){
 
 function countingOnUpTo10(){
     /*Single digit sums that add up to a single digit
-    For bases with leters (i.e. base > 10), a bias is given towards sums adding to letterrs (more then 10)
+    For bases with leters (i.e. base > 10), a bias is given towards summing to letters (more then 10)
     */
     let leftNumber = Math.floor(Math.random()*(baseConversion("10")));
     let rightNumberMax = (baseConversion("10") - leftNumber);
     let rightNumber = Math.floor(Math.random()*rightNumberMax);
     if(rightNumber > leftNumber){
+        //big number first is easier because it matches reading direction
         let temp = rightNumber;
         rightNumber = leftNumber;
         leftNumber = temp;
     }
     if(baseConversion("10") > 10 && (leftNumber + rightNumber) < 10){
-        //skew towards letter based sums
+        //skew towards letter answers
         let headroom = baseConversion("10") -  (leftNumber + rightNumber);
         leftNumber += Math.floor(Math.random()*headroom);
     }
