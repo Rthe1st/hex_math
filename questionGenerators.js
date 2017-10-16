@@ -90,7 +90,7 @@ function doublesPlusOne(){
 }
 
 function makingTen(){
-    /*this needs to make of of the left/right values missing
+    /*this needs to have one of the left/right values missing
     because answer is easy to guess*/
     leftNumber = Math.floor(Math.random()*baseConversion("10"));
     let question = makeEquationString(leftNumber, null, baseConversion("10"));
@@ -99,7 +99,7 @@ function makingTen(){
 }
 
 function makingMultiplesOfTen(){
-    /*this needs to make of of the left/right values missing
+    /*this needs to have one of the left/right values missing
     because answer is easy to guess*/
     leftNumber = Math.floor(Math.random()*baseConversion("100"));
     rightNumber = baseConversion("10") - (leftNumber%baseConversion("10"));
