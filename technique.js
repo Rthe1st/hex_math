@@ -6,7 +6,7 @@ class Technique{
         this.correct = 0;
         this.incorrect = 0;
         this.windowAverage = [];
-        this.windowSize = 5;
+        this.windowSize = 20;
     }
 
     newQuestion(){

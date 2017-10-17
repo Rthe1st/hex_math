@@ -92,16 +92,30 @@ let statistics = {
 
 let questionDetail;
 
-function newQuestion(){
-    result.textContent = "";
-    let chosenTechnique = progress.currentTechnique;
-    for(let technique of progress.passedTechniques){
-        //this is crap (i.e. when current technique has a perfect average)
-        //change to some clever weighting shit
-        if(false && technique.average() < chosenTechnique.average()){
-            chosenTechnique = technique;
+function pickTechnique(){
+    //prioritise techniques that don't have enough answers to get an accurate average
+    let possibleTechniques = progress.passedTechniques.concat(progress.currentTechnique);
+    for(let technique of possibleTechniques){
+        if(technique.windowAverage.length < technique.windowSize){
+            return technique;
         }
     }
+    //techniques user's done badly have the best change of being picked
+    //exponetial decrease in probablity means only worst 4/5 are likely
+    function lowToHigh(a, b){return b.average() - a.average()}
+    possibleTechniques.sort(function(a, b){return b.average() - a.average()});
+    for(let technique of possibleTechniques){
+        if(Math.random() > 0.5){
+            return technique;
+        }
+    }
+    //we're only likely to get here when there aren't many possible techniques
+    return possibleTechniques[-1];
+}
+
+function newQuestion(){
+    result.textContent = "";
+    let chosenTechnique = pickTechnique();
     questionDetail = chosenTechnique.newQuestion();
     question = document.getElementById("question");
     question.textContent = questionDetail.question;
