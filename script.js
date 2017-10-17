@@ -61,7 +61,7 @@ function recordQuestion(wasCorrect){
         entry.setAttribute("class", "incorrect");
     }
     entry.appendChild(document.createTextNode(questionDetail.question));
-    previousAnswers.appendChild(entry);
+    previousAnswers.prepend(entry);
 }
 
 let techniques = [
