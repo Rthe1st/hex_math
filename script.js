@@ -62,6 +62,10 @@ function recordQuestion(wasCorrect){
     }
     entry.appendChild(document.createTextNode(questionDetail.question));
     previousAnswers.prepend(entry);
+    let maxAnswersDisplayed = 7;
+    if(previousAnswers.children.length > maxAnswersDisplayed){
+        previousAnswers.removeChild(previousAnswers.lastChild);
+    }
 }
 
 let techniques = [
