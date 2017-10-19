@@ -7,6 +7,15 @@ class Technique{
         this.incorrect = 0;
         this.windowAverage = [];
         this.windowSize = 20;
+        this.questions = new Map();
+        let firstQuestion = new Question(this);
+        this.questions.set(firstQuestion.text, firstQuestion);
+    }
+
+    addSuggestions(suggestions){
+        for(let suggestion of suggestions){
+            this.questions.set(suggestion.text, suggestion);
+        }
     }
 
     windowStats(){
