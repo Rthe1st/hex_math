@@ -28,31 +28,29 @@ function checkProgress(){
 
 function checkAnswer(event){
     let guess = parseInt(document.getElementById("answer").value, base());
-    let wasRight = guess === questionDetail.answer
-    recordQuestion(wasRight);
+    let wasRight = currentQuestion.isGuessRight(guess);
+    currentQuestion.technique.addResult(wasRight);
+    recordQuestion(currentQuestion, wasRight);
     let result = document.getElementById("result");
     if(wasRight){
         result.textContent = "correct!";
         statistics.totalCorrect += 1;
         statistics.test.correct += 1;
         checkProgress();
-        newQuestion(questionDetail);
+        newQuestion();
     }else{
         result.textContent = "wrong!";
         statistics.totalIncorrect += 1;
         statistics.test.incorrect += 1;
-        numberLine(questionDetail.left, guess, true);
-        let questionText = document.getElementById("question").textContent;
-        let answerText = questionDetail.answer.toString(base());
-        alert(questionText.replace("?", answerText));
+        numberLine(currentQuestion.left, guess, true);
+        alert(currentQuestion.text.replace("?", currentQuestion.answer));
     }
     refreshGraph(plotData);
     document.getElementById("answer").value = "";
     document.getElementById("answer").focus();
 }
 
-function recordQuestion(wasCorrect){
-    questionDetail.technique.addResult(wasCorrect);
+function recordQuestion(question, wasCorrect){
     let previousAnswers = document.getElementById("previous-answers");
     let entry = document.createElement('li');
     if(wasCorrect){
@@ -60,7 +58,7 @@ function recordQuestion(wasCorrect){
     }else{
         entry.setAttribute("class", "incorrect");
     }
-    entry.appendChild(document.createTextNode(questionDetail.question));
+    entry.appendChild(document.createTextNode(question.text));
     previousAnswers.prepend(entry);
     let maxAnswersDisplayed = 7;
     if(previousAnswers.children.length > maxAnswersDisplayed){
@@ -94,7 +92,7 @@ let statistics = {
     }
 };
 
-let questionDetail;
+let currentQuestion;
 
 function pickTechnique(){
     //prioritise techniques that don't have enough answers to get an accurate average
@@ -120,9 +118,9 @@ function pickTechnique(){
 function newQuestion(){
     result.textContent = "";
     let chosenTechnique = pickTechnique();
-    questionDetail = chosenTechnique.newQuestion();
-    question = document.getElementById("question");
-    question.textContent = questionDetail.question;
+    currentQuestion = new Question(chosenTechnique);
+    questionElement = document.getElementById("question");
+    questionElement.textContent = currentQuestion.text;
 }
 
 window.onload = function(){
