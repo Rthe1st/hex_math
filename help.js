@@ -1,6 +1,5 @@
-function refreshHelp(){
-    let css = questionDetail.technique.cssName;
-    let helpDiv = document.querySelector('#help > [name="' + css + '"]');
+function refreshHelp(cssName){
+    let helpDiv = document.querySelector('#help > [name="' + cssName + '"]');
     let allHelpDivs = document.querySelectorAll('#help > *');
     allHelpDivs.forEach(function(element){
         element.setAttribute("hidden", true);
