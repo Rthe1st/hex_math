@@ -9,11 +9,6 @@ class Technique{
         this.windowSize = 20;
     }
 
-    newQuestion(){
-        let [question, answer, left] = this.questionGenerator();
-        return {question: question, answer: answer, left: left, technique: this};
-    }
-
     windowStats(){
         let numberOfCorrects = 0;
         let numberOfIncorrects = 0;
