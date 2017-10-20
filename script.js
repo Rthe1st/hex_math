@@ -18,18 +18,27 @@ function baseConversion(value){
 }
 
 function checkProgress(){
-    onLastLevel = progress.futureTechniques.length == 0
-    if(progress.currentTechnique.isPassing() && !onLastLevel){
-            alert("level up!");
-            progress.passedTechniques.push(progress.currentTechnique);
-            progress.currentTechnique = progress.futureTechniques.shift();
+    /*todo: this should check the stats array, add questions based on it
+    i.e.
+    if(more then 20 questions right){
+        questionList.addQuestions([
+            new Question(countingOnUpTo10),
+        ]);
     }
+    etc
+    new Question(countingOnAbove10),
+    new Question(countingOn),
+    new Question(doubles),
+    new Question(doublesPlusOne),
+    new Question(makingTen),
+    new Question(makingMultiplesOfTen),
+    new Question(frontEndAddtion),
+    */
 }
 
 function checkAnswer(event){
     let guess = parseInt(document.getElementById("answer").value, base());
     let wasRight = currentQuestion.isGuessRight(guess);
-    currentQuestion.technique.addResult(wasRight);
     recordQuestion(currentQuestion, wasRight);
     let result = document.getElementById("result");
     if(wasRight){
@@ -37,16 +46,16 @@ function checkAnswer(event){
         statistics.totalCorrect += 1;
         statistics.test.correct += 1;
         checkProgress();
-        currentQuestion.makeSuggestions(wasRight);
+        questionList.addQuestions(currentQuestion.makeSuggestions(wasRight));
         chooseQuestion();
     }else{
         result.textContent = "wrong!";
         statistics.totalIncorrect += 1;
         statistics.test.incorrect += 1;
         numberLine(currentQuestion.left, guess, true);
-        alert(currentQuestion.text.replace("?", currentQuestion.answer));
+        alert(currentQuestion.text.replace("?", currentQuestion.answer.toString(base())));
     }
-    refreshGraph(plotData);
+    refreshGraph(stats, plotData);
     document.getElementById("answer").value = "";
     document.getElementById("answer").focus();
 }
@@ -67,7 +76,15 @@ function recordQuestion(question, wasCorrect){
     }
 }
 
-let techniques = [];
+function chooseQuestion(){
+    result.textContent = "";
+    currentQuestion = questionList.pickQuestion();
+    questionElement = document.getElementById("question");
+    questionElement.textContent = currentQuestion.text;
+}
+
+let stats;
+let questionList;
 
 let progress = {};
 
@@ -82,55 +99,24 @@ let statistics = {
 
 let currentQuestion;
 
-function pickTechnique(){
-    //prioritise techniques that don't have enough answers to get an accurate average
-    let possibleTechniques = progress.passedTechniques.concat(progress.currentTechnique);
-    for(let technique of possibleTechniques){
-        if(technique.windowAverage.length < technique.windowSize){
-            return technique;
-        }
-    }
-    //techniques user's done badly have the best change of being picked
-    //exponetial decrease in probablity means only worst 4/5 are likely
-    function lowToHigh(a, b){return b.average() - a.average()}
-    possibleTechniques.sort(function(a, b){return b.average() - a.average()});
-    for(let technique of possibleTechniques){
-        if(Math.random() > 0.5){
-            return technique;
-        }
-    }
-    //we're only likely to get here when there aren't many possible techniques
-    return possibleTechniques[-1];
-}
-
-function chooseQuestion(){
-    result.textContent = "";
-    let chosenTechnique = pickTechnique();
-    let questionIndex = Math.floor(Math.random()*chosenTechnique.questions.size);
-    currentQuestion = Array.from(chosenTechnique.questions.values())[questionIndex];
-    questionElement = document.getElementById("question");
-    questionElement.textContent = currentQuestion.text;
-}
-
 window.onload = function(){
-    techniques = [
-        new Technique("Count on up to 10", countingOnUpTo10, "count-on"),
-        new Technique("Count on above 10", countingOnAbove10, "count-on"),
-        new Technique("Count on", countingOn, "count-on"),
-        new Technique("Doubles", doubles, "doubles"),
-        new Technique("Doubles plus 1", doublesPlusOne, "doubles-plus-1"),
-        new Technique("Making 10", makingTen, "making-10"),
-        new Technique("Making multiples of 10", makingMultiplesOfTen, "making-multiples-of-10"),
-        new Technique("Front end Addition", frontEndAddtion, "front-end-addition")
+    questionList = new QuestionList();
+    questionList.addQuestions([
+        new Question(countingOnUpTo10)
+    ]);
+    stats = [
+        {name: "Count on up to 10", correct: 0, incorrect: 0},
+        {name: "Count on above 10", correct: 0, incorrect: 0},
+        {name: "Count on", correct: 0, incorrect: 0},
+        {name: "Doubles", correct: 0, incorrect: 0},
+        {name: "Doubles plus 1", correct: 0, incorrect: 0},
+        {name: "Making 10", correct: 0, incorrect: 0},
+        {name: "Making multiples of 10", correct: 0, incorrect: 0},
+        {name: "Front end Addition", correct: 0, incorrect: 0}
     ];
-    progress = {
-        currentTechnique: techniques[0],
-        passedTechniques: [],
-        futureTechniques: techniques.slice(1)
-    };
+    drawGraph(stats);
+    chooseQuestion();
     checkButton = document.getElementById("check");
     checkButton.addEventListener("click", checkAnswer, true);
     document.getElementById("do-test").addEventListener("click", doTest, true);
-    chooseQuestion();
-    drawGraph();
 }

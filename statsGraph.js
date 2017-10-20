@@ -1,13 +1,13 @@
 var plotData;
 
-function drawGraph(){
+function drawGraph(stats){
     let yAxis = [];
     let xAxisCorrect = [];
     let xAxisIncorrect = [];
-    for(let technique of techniques){
-        yAxis.push(technique.name);
-        xAxisCorrect.push(technique.correct);
-        xAxisIncorrect.push(technique.incorrect);
+    for(let stat of stats){
+        yAxis.push(stat.name);
+        xAxisCorrect.push(stat.correct);
+        xAxisIncorrect.push(stat.incorrect);
     }
     var trace1 = {
         x: xAxisCorrect,
@@ -40,11 +40,10 @@ function drawGraph(){
     Plotly.newPlot('tester', data, layout);
 }
 
-function refreshGraph(data) {
-    for(let [index, entry] of techniques.entries()){
-        let [correct, incorrect] = entry.windowStats();
-        data[0]['x'][index] = correct;
-        data[1]['x'][index] = incorrect;
+function refreshGraph(stats, data) {
+    for(let [index, stat] of stats.entries()){
+        data[0]['x'][index] = stat.correct;
+        data[1]['x'][index] = stat.incorrect;
     }
     Plotly.redraw('tester');
 }

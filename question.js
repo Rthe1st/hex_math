@@ -1,10 +1,12 @@
 class Question{
-    constructor(technique){
-        this.technique = technique;
-        [this.text, this.answer, this.left] = this.technique.questionGenerator();
+    constructor(questionGenerator){
+        //todo: make text and answer params
+        this.questionGenerator = questionGenerator;
+        [this.text, this.answer, this.left] = this.questionGenerator();
     }
 
     isGuessRight(guess){
+        //todo: record past gusses are property of question
         return guess === this.answer;
     }
 
@@ -13,7 +15,6 @@ class Question{
         //if guess was right, they'll be harder
         //if wrong, they'll be easier
         //placeholder implementation:
-        let suggestions = [new Question(this.technique)];
-        this.technique.addSuggestions(suggestions);
+        return [new Question(this.questionGenerator)];
     }
 }
