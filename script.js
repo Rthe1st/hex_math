@@ -33,6 +33,14 @@ function checkProgress(){
     new Question(makingTen),
     new Question(makingMultiplesOfTen),
     new Question(frontEndAddtion),
+    also add to stats as we go:
+            {name: "Count on above 10", correct: 0, incorrect: 0},
+        {name: "Count on", correct: 0, incorrect: 0},
+        {name: "Doubles", correct: 0, incorrect: 0},
+        {name: "Doubles plus 1", correct: 0, incorrect: 0},
+        {name: "Making 10", correct: 0, incorrect: 0},
+        {name: "Making multiples of 10", correct: 0, incorrect: 0},
+        {name: "Front end Addition", correct: 0, incorrect: 0}
     */
 }
 
@@ -105,14 +113,7 @@ window.onload = function(){
         new Question(countingOnUpTo10)
     ]);
     stats = [
-        {name: "Count on up to 10", correct: 0, incorrect: 0},
-        {name: "Count on above 10", correct: 0, incorrect: 0},
-        {name: "Count on", correct: 0, incorrect: 0},
-        {name: "Doubles", correct: 0, incorrect: 0},
-        {name: "Doubles plus 1", correct: 0, incorrect: 0},
-        {name: "Making 10", correct: 0, incorrect: 0},
-        {name: "Making multiples of 10", correct: 0, incorrect: 0},
-        {name: "Front end Addition", correct: 0, incorrect: 0}
+        {name: "Count on up to 10", correct: 0, incorrect: 0}
     ];
     drawGraph(stats);
     chooseQuestion();
