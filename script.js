@@ -110,7 +110,7 @@ let currentQuestion;
 window.onload = function(){
     questionList = new QuestionList();
     questionList.addQuestions([
-        new Question(countingOnUpTo10)
+        new Question("9 + 1 = ?", baseConversion('a'), 9, countingOnUpTo10)
     ]);
     stats = [
         {name: "Count on up to 10", correct: 0, incorrect: 0}

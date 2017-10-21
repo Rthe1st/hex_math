@@ -1,8 +1,10 @@
 class Question{
-    constructor(questionGenerator){
+    constructor(text, answer, left, questionGenerator){
         //todo: make text and answer params
+        this.text = text;
+        this.answer = answer;
+        this.left = left;
         this.questionGenerator = questionGenerator;
-        [this.text, this.answer, this.left] = this.questionGenerator();
     }
 
     isGuessRight(guess){
@@ -15,6 +17,6 @@ class Question{
         //if guess was right, they'll be harder
         //if wrong, they'll be easier
         //placeholder implementation:
-        return [new Question(this.questionGenerator)];
+        return [this.questionGenerator()];
     }
 }

@@ -34,9 +34,9 @@ function countingOnUpTo10(){
         let headroom = baseConversion("10") -  (leftNumber + rightNumber);
         leftNumber += Math.floor(Math.random()*headroom);
     }
-    let question = makeEquationString(leftNumber, rightNumber, null);
+    let questionText = makeEquationString(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return [question, answer, leftNumber];
+    return new Question(questionText, answer, leftNumber, countingOnUpTo10);
 }
 
 function countingOnAbove10(){
@@ -54,9 +54,9 @@ function countingOnAbove10(){
         rightNumber = leftNumber;
         leftNumber = temp;
     }
-    let question = makeEquationString(leftNumber, rightNumber, null);
+    let questionText = makeEquationString(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return [question, answer, leftNumber];
+    return new Question(questionText, answer, leftNumber, countingOnAbove10);
 }
 
 function countingOn(){
@@ -65,16 +65,16 @@ function countingOn(){
     */
     let leftNumber = Math.floor(Math.random()*baseConversion("10"));
     let rightNumber = Math.floor(Math.random()*leftNumber);
-    let question = makeEquationString(leftNumber, rightNumber, null);
+    let questionText = makeEquationString(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return [question, answer, leftNumber];
+    return new Question(questionText, answer, leftNumber, countingOn);
 }
 
 function doubles(){
     let number = Math.floor(Math.random()*baseConversion("10"));
-    let question = makeEquationString(number, number, null);
+    let questionText = makeEquationString(number, number, null);
     let answer = number*2;
-    return [question, answer, number];
+    return new Question(questionText, answer, leftNumber, doubles);
 }
 
 function doublesPlusOne(){
@@ -84,18 +84,18 @@ function doublesPlusOne(){
     }else{
         leftNumber += 1;
     }
-    let question = makeEquationString(leftNumber, rightNumber, null);
+    let questionText = makeEquationString(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return [question, answer, leftNumber];
+    return new Question(questionText, answer, leftNumber, doublesPlusOne);
 }
 
 function makingTen(){
     /*this needs to have one of the left/right values missing
     because answer is easy to guess*/
     leftNumber = Math.floor(Math.random()*baseConversion("10"));
-    let question = makeEquationString(leftNumber, null, baseConversion("10"));
+    let questionText = makeEquationString(leftNumber, null, baseConversion("10"));
     let answer = 0x10 - leftNumber;
-    return [question, answer, leftNumber];
+    return new Question(questionText, answer, leftNumber, makingTen);
 }
 
 function makingMultiplesOfTen(){
@@ -103,16 +103,16 @@ function makingMultiplesOfTen(){
     because answer is easy to guess*/
     leftNumber = Math.floor(Math.random()*baseConversion("100"));
     rightNumber = baseConversion("10") - (leftNumber%baseConversion("10"));
-    let question = makeEquationString(leftNumber, null, (leftNumber + rightNumber));
+    let questionText = makeEquationString(leftNumber, null, (leftNumber + rightNumber));
     let answer = rightNumber;
-    return [question, answer, leftNumber];
+    return new Question(questionText, answer, leftNumber, makingMultiplesOfTen);
 }
 
 function frontEndAddtion(){
     /*this probably needs us to check they add up the 3 component parts as well*/
     leftNumber = Math.floor(Math.random()*baseConversion("100"));
     rightNumber = Math.floor(Math.random()*baseConversion("10"));
-    let question = makeEquationString(leftNumber, rightNumber, null);
+    let questionText = makeEquationString(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return [question, answer, leftNumber];
+    return new Question(questionText, answer, leftNumber, frontEndAddtion);
 }
