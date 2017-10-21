@@ -60,7 +60,7 @@ function checkAnswer(event){
         result.textContent = "wrong!";
         statistics.totalIncorrect += 1;
         statistics.test.incorrect += 1;
-        numberLine(currentQuestion.left, guess, true);
+        numberLine(currentQuestion.numberLineStart, guess, true);
         alert(currentQuestion.text.replace("?", currentQuestion.answer.toString(base())));
     }
     refreshGraph(stats, plotData);
@@ -110,7 +110,7 @@ let currentQuestion;
 window.onload = function(){
     questionList = new QuestionList();
     questionList.addQuestions([
-        new Question("9 + 1 = ?", baseConversion('a'), 9, countingOnUpTo10)
+        new Question(["9", "+", "1", "=", "?"], baseConversion('a'), countingOnUpTo10)
     ]);
     stats = [
         {name: "Count on up to 10", correct: 0, incorrect: 0}

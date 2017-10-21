@@ -1,4 +1,4 @@
-function makeEquationString(left, right, answer){
+function makeQuestionParts(left, right, answer){
     //let nullParams = 1;//[left, right, answer].filter(function(element){
     //   return element == null;
     //});
@@ -13,7 +13,7 @@ function makeEquationString(left, right, answer){
             return value.toString(base());
         }
     });
-    return left + " + " + right + " = " + answer;
+    return [left, "+", right, "=", answer];
 }
 
 function countingOnUpTo10(){
@@ -34,9 +34,9 @@ function countingOnUpTo10(){
         let headroom = baseConversion("10") -  (leftNumber + rightNumber);
         leftNumber += Math.floor(Math.random()*headroom);
     }
-    let questionText = makeEquationString(leftNumber, rightNumber, null);
+    let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return new Question(questionText, answer, leftNumber, countingOnUpTo10);
+    return new Question(questionParts, answer, countingOnUpTo10);
 }
 
 function countingOnAbove10(){
@@ -54,9 +54,9 @@ function countingOnAbove10(){
         rightNumber = leftNumber;
         leftNumber = temp;
     }
-    let questionText = makeEquationString(leftNumber, rightNumber, null);
+    let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return new Question(questionText, answer, leftNumber, countingOnAbove10);
+    return new Question(questionParts, answer, countingOnAbove10);
 }
 
 function countingOn(){
@@ -65,16 +65,16 @@ function countingOn(){
     */
     let leftNumber = Math.floor(Math.random()*baseConversion("10"));
     let rightNumber = Math.floor(Math.random()*leftNumber);
-    let questionText = makeEquationString(leftNumber, rightNumber, null);
+    let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return new Question(questionText, answer, leftNumber, countingOn);
+    return new Question(questionParts, answer, countingOn);
 }
 
 function doubles(){
     let number = Math.floor(Math.random()*baseConversion("10"));
-    let questionText = makeEquationString(number, number, null);
+    let questionParts = makeQuestionParts(number, number, null);
     let answer = number*2;
-    return new Question(questionText, answer, leftNumber, doubles);
+    return new Question(questionParts, answer, doubles);
 }
 
 function doublesPlusOne(){
@@ -84,18 +84,18 @@ function doublesPlusOne(){
     }else{
         leftNumber += 1;
     }
-    let questionText = makeEquationString(leftNumber, rightNumber, null);
+    let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return new Question(questionText, answer, leftNumber, doublesPlusOne);
+    return new Question(questionParts, answer, doublesPlusOne);
 }
 
 function makingTen(){
     /*this needs to have one of the left/right values missing
     because answer is easy to guess*/
     leftNumber = Math.floor(Math.random()*baseConversion("10"));
-    let questionText = makeEquationString(leftNumber, null, baseConversion("10"));
+    let questionParts = makeQuestionParts(leftNumber, null, baseConversion("10"));
     let answer = 0x10 - leftNumber;
-    return new Question(questionText, answer, leftNumber, makingTen);
+    return new Question(questionParts, answer, makingTen);
 }
 
 function makingMultiplesOfTen(){
@@ -103,16 +103,16 @@ function makingMultiplesOfTen(){
     because answer is easy to guess*/
     leftNumber = Math.floor(Math.random()*baseConversion("100"));
     rightNumber = baseConversion("10") - (leftNumber%baseConversion("10"));
-    let questionText = makeEquationString(leftNumber, null, (leftNumber + rightNumber));
+    let questionParts = makeQuestionParts(leftNumber, null, (leftNumber + rightNumber));
     let answer = rightNumber;
-    return new Question(questionText, answer, leftNumber, makingMultiplesOfTen);
+    return new Question(questionParts, answer, makingMultiplesOfTen);
 }
 
 function frontEndAddtion(){
     /*this probably needs us to check they add up the 3 component parts as well*/
     leftNumber = Math.floor(Math.random()*baseConversion("100"));
     rightNumber = Math.floor(Math.random()*baseConversion("10"));
-    let questionText = makeEquationString(leftNumber, rightNumber, null);
+    let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
     let answer = leftNumber + rightNumber;
-    return new Question(questionText, answer, leftNumber, frontEndAddtion);
+    return new Question(questionParts, answer, frontEndAddtion);
 }
