@@ -35,7 +35,6 @@ function checkAnswer(event){
         numberLine(currentQuestion.numberLineStart, guess, true);
         alert(currentQuestion.text.replace("?", currentQuestion.answer.toString(base())));
     }
-    refreshGraph(stats, plotData);
     document.getElementById("answer").value = "";
     document.getElementById("answer").focus();
 }
@@ -87,7 +86,6 @@ window.onload = function(){
     stats = [
         {name: "Count on up to 10", correct: 0, incorrect: 0}
     ];
-    drawGraph(stats);
     chooseQuestion();
     checkButton = document.getElementById("check");
     checkButton.addEventListener("click", checkAnswer, true);
