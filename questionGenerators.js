@@ -16,27 +16,20 @@ function makeQuestionParts(left, right, answer){
     return [left, "+", right, "=", answer];
 }
 
-function countingOnUpTo10(){
+function countingOnUpTo10(baseQuestion, wasRight){
     /*Single digit sums that add up to a single digit
     For bases with leters (i.e. base > 10), a bias is given towards summing to letters (more then 10)
     */
-    let leftNumber = Math.floor(Math.random()*(baseConversion("10")));
-    let rightNumberMax = (baseConversion("10") - leftNumber);
-    let rightNumber = Math.floor(Math.random()*rightNumberMax);
-    if(rightNumber > leftNumber){
-        //big number first is easier because it matches reading direction
-        let temp = rightNumber;
-        rightNumber = leftNumber;
-        leftNumber = temp;
+    let leftNumber = baseConversion(baseQuestion.parts[0]);
+    let rightNumber = baseConversion(baseQuestion.parts[2]);
+    if(leftNumber + rightNumber < baseConversion("10")-1){
+        leftNumber += 1;
+        let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
+        let answer = leftNumber + rightNumber;
+        return [new Question(questionParts, answer, countingOnUpTo10)];
+    }else{
+        return [baseQuestion];
     }
-    if(baseConversion("10") > 10 && (leftNumber + rightNumber) < 10){
-        //skew towards letter answers
-        let headroom = baseConversion("10") -  (leftNumber + rightNumber);
-        leftNumber += Math.floor(Math.random()*headroom);
-    }
-    let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
-    let answer = leftNumber + rightNumber;
-    return new Question(questionParts, answer, countingOnUpTo10);
 }
 
 function countingOnAbove10(){

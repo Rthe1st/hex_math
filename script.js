@@ -54,7 +54,7 @@ function checkAnswer(event){
         statistics.totalCorrect += 1;
         statistics.test.correct += 1;
         checkProgress();
-        questionList.addQuestions(currentQuestion.makeSuggestions(wasRight));
+        questionList.tune(currentQuestion, wasRight);
         chooseQuestion();
     }else{
         result.textContent = "wrong!";
