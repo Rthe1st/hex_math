@@ -9,6 +9,24 @@ if (window.NodeList && !NodeList.prototype.forEach) {
     };
 }
 
+function makeQuestionParts(left, right, answer){
+    //let nullParams = 1;//[left, right, answer].filter(function(element){
+    //   return element == null;
+    //});
+    //let nullParams = [left, right, answer].filter(element => element == null);
+   //if(nullParams.length > 1){
+    //    console.log("Equation is under-specified");
+    //}
+    [left, right, answer] = [left, right, answer].map(function(value){
+        if(value == null){
+            return "?";
+        }else{
+            return value.toString(base());
+        }
+    });
+    return [left, "+", right, "=", answer];
+}
+
 function base(){
     return parseInt(document.getElementById("base").value);
 }
@@ -81,7 +99,7 @@ let currentQuestion;
 window.onload = function(){
     questionList = new QuestionList();
     questionList.addQuestions([
-        new Question(["9", "+", "1", "=", "?"], baseConversion('a'), countingOnUpTo10)
+        new Question(["9", "+", "1", "=", "?"], baseConversion('a'))
     ]);
     stats = [
         {name: "Count on up to 10", correct: 0, incorrect: 0}
