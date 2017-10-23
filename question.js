@@ -6,6 +6,7 @@ class Question{
             console.log("invalid equation " + parts.join() + "in question");
         }
         this.answer = answer;
+        this.pastGuesses = new Map([["right", 0], ["wrong", 0]]);
     }
 
     isValidEquation(parts){
@@ -47,6 +48,12 @@ class Question{
 
     isGuessRight(guess){
         //todo: record past gusses are property of question
-        return guess === this.answer;
+        let wasRight = guess === this.answer;
+        if(wasRight){
+            this.pastGuesses.set("right", this.pastGuesses.get("right")+1);
+        }else{
+            this.pastGuesses.set("wrong", this.pastGuesses.get("wrong")+1);
+        }
+        return wasRight;
     }
 }

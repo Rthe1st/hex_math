@@ -17,44 +17,16 @@ function baseConversion(value){
     return parseInt(value, base());
 }
 
-function checkProgress(){
-    /*todo: this should check the stats array, add questions based on it
-    i.e.
-    if(more then 20 questions right){
-        questionList.addQuestions([
-            new Question(countingOnUpTo10),
-        ]);
-    }
-    etc
-    new Question(countingOnAbove10),
-    new Question(countingOn),
-    new Question(doubles),
-    new Question(doublesPlusOne),
-    new Question(makingTen),
-    new Question(makingMultiplesOfTen),
-    new Question(frontEndAddtion),
-    also add to stats as we go:
-            {name: "Count on above 10", correct: 0, incorrect: 0},
-        {name: "Count on", correct: 0, incorrect: 0},
-        {name: "Doubles", correct: 0, incorrect: 0},
-        {name: "Doubles plus 1", correct: 0, incorrect: 0},
-        {name: "Making 10", correct: 0, incorrect: 0},
-        {name: "Making multiples of 10", correct: 0, incorrect: 0},
-        {name: "Front end Addition", correct: 0, incorrect: 0}
-    */
-}
-
 function checkAnswer(event){
     let guess = parseInt(document.getElementById("answer").value, base());
     let wasRight = currentQuestion.isGuessRight(guess);
     recordQuestion(currentQuestion, wasRight);
     let result = document.getElementById("result");
+    questionList.tune(currentQuestion, wasRight);
     if(wasRight){
         result.textContent = "correct!";
         statistics.totalCorrect += 1;
         statistics.test.correct += 1;
-        checkProgress();
-        questionList.tune(currentQuestion, wasRight);
         chooseQuestion();
     }else{
         result.textContent = "wrong!";

@@ -23,12 +23,12 @@ function countingOnUpTo10(baseQuestion, wasRight){
     let leftNumber = baseConversion(baseQuestion.parts[0]);
     let rightNumber = baseConversion(baseQuestion.parts[2]);
     if(leftNumber + rightNumber < baseConversion("10")-1){
-        leftNumber += 1;
+        rightNumber += 1;
         let questionParts = makeQuestionParts(leftNumber, rightNumber, null);
         let answer = leftNumber + rightNumber;
         return [new Question(questionParts, answer, countingOnUpTo10)];
     }else{
-        return [baseQuestion];
+        return [];
     }
 }
 
